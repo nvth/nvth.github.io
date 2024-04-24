@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>Interactive Shell (Without python, socat)</h1>
+<p>After `nc -lvnp 4231` got a shell</p> 
+Up non interactive shell to interactive shell (no python, no socat running on machine)</br>
+</br>
+/usr/bin/script -qc /bin/bash /dev/null
+</br>
+Ctr-Z
+</br>
+stty raw -echo; fg; reset</p>
+
+</body>
+</html>
+
+
