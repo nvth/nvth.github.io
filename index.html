@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>nvth — Cyber Security Engineer</title>
+  <meta name="description" content="Personal portfolio of nvth — Penetration Tester, AppSec Engineer, OSWE 2024, CEH 2023." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0D1117;
+      color: #FFFFFF;
+      font-family: 'Fira Code', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Name */
+    .name {
+      font-size: 3rem;
+      font-weight: 600;
+      color: #00FF88;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .role {
+      font-size: 0.95rem;
+      color: #8B949E;
+      margin-bottom: 2.4rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1.4rem;
+      background: #161B22;
+      border: 1px solid #21262D;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #FFFFFF;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .nav a:hover {
+      border-color: #00FF88;
+      background: #0A3D2E22;
+      color: #00FF88;
+    }
+
+    .nav a .icon { font-size: 1.1rem; min-width: 1.4rem; }
+    .nav a .label { font-weight: 600; min-width: 80px; text-align: left; }
+    .nav a .desc { color: #8B949E; font-size: 0.82rem; flex: 1; text-align: left; }
+    .nav a:hover .desc { color: #8B949E; }
+
+    /* Visitor badge */
+    .badge {
+      margin-top: 0.5rem;
+    }
+
+    .badge img {
+      height: 28px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="name">nvth</div>
+    <div class="role">Cyber Security Engineer</div>
+
+    <nav class="nav">
+      <a href="./profile.md">
+        <span class="icon">👤</span>
+        <span class="label">About Me</span>
+        <span class="desc">Hồ sơ cá nhân, chứng chỉ, kỹ năng</span>
+      </a>
+      <a href="./blog/">
+        <span class="icon">📝</span>
+        <span class="label">Blog</span>
+        <span class="desc">Write-ups, nghiên cứu bảo mật, CTF</span>
+      </a>
+      <a href="./projects/">
+        <span class="icon">🗂️</span>
+        <span class="label">Projects</span>
+        <span class="desc">Các dự án &amp; nghiên cứu nổi bật</span>
+      </a>
+      <a href="./contact.md">
+        <span class="icon">🌐</span>
+        <span class="label">Contact</span>
+        <span class="desc">Liên hệ &amp; mạng xã hội</span>
+      </a>
+    </nav>
+
+    <div class="badge">
+      <img src="https://komarev.com/ghpvc/?username=nvth&style=for-the-badge&color=00FF88&labelColor=0D1117&label=VISITORS" alt="Visitors" />
+    </div>
+  </div>
+</body>
+</html>
