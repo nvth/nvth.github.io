@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nvth — Cyber Security Engineer</title>
+  <meta name="description" content="nvth | Penetration Tester · Product Security · OSWE 2024 · CEH 2023" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0D1117;
+      --bg2:    #161B22;
+      --bg3:    #1C2128;
+      --border: #30363D;
+      --green:  #00FF88;
+      --blue:   #00C6FF;
+      --red:    #FF4444;
+      --yellow: #FACC15;
+      --purple: #A78BFA;
+      --text:   #E6EDF3;
+      --muted:  #8B949E;
+      --mono:   'Fira Code', monospace;
+      --sans:   'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; min-height: 100vh; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 80px 20px 64px;
+      background: linear-gradient(160deg, #0D1117 0%, #0A3D2E 55%, #0D1117 100%);
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0,255,136,.13) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(0,198,255,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0,255,136,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .avatar-ring {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100px; height: 100px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      padding: 3px; margin-bottom: 20px;
+      animation: pulse-ring 3s ease-in-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%,100% { box-shadow: 0 0 0 0 rgba(0,255,136,.4), 0 0 20px rgba(0,255,136,.2); }
+      50%      { box-shadow: 0 0 0 8px rgba(0,255,136,0), 0 0 40px rgba(0,255,136,.3); }
+    }
+    .avatar-inner {
+      width: 100%; height: 100%; border-radius: 50%; background: var(--bg2);
+      display: flex; align-items: center; justify-content: center; font-size: 2.4rem;
+    }
+    header h1 {
+      font-family: var(--mono); font-size: clamp(2.5rem,6vw,4rem); font-weight: 600;
+      color: var(--green); letter-spacing: 4px;
+      text-shadow: 0 0 30px rgba(0,255,136,.5); margin-bottom: 8px;
+    }
+    .subtitle { font-size: 1.05rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+    .typing-line { font-family: var(--mono); font-size: 1rem; color: var(--blue); height: 24px; margin-bottom: 32px; }
+    .typing-line span { border-right: 2px solid var(--blue); padding-right: 4px; animation: blink .7s step-end infinite; }
+    @keyframes blink { 0%,100% { border-color: var(--blue); } 50% { border-color: transparent; } }
+
+    .badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 6px;
+      font-family: var(--mono); font-size: .78rem; font-weight: 600;
+      border: 1px solid; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .badge:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,255,136,.2); }
+    .badge-green { background: var(--bg2); color: var(--green); border-color: rgba(0,255,136,.3); }
+    .badge-blue  { background: var(--bg2); color: var(--blue);  border-color: rgba(0,198,255,.3); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,17,23,.9); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: center; gap: 6px; padding: 10px 20px; flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--muted); text-decoration: none; font-size: .85rem;
+      font-family: var(--mono); padding: 6px 14px; border-radius: 6px; transition: all .2s;
+    }
+    nav a:hover { color: var(--green); background: rgba(0,255,136,.08); }
+
+    /* ── MAIN ── */
+    main { max-width: 860px; margin: 0 auto; padding: 60px 24px; }
+    section { margin-bottom: 70px; opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    section.visible { opacity: 1; transform: translateY(0); }
+
+    .section-title {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 1.2rem; font-weight: 600; color: var(--text);
+      margin-bottom: 28px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--green), transparent); margin-left: 4px; }
+
+    /* ── CODE BLOCK ── */
+    .code-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-family: var(--mono); font-size: .88rem; }
+    .code-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #FF5F57; } .dot-y { background: #FEBC2E; } .dot-g { background: #28C840; }
+    .code-filename { color: var(--muted); font-size: .8rem; margin-left: 6px; }
+    .code-body { padding: 20px 24px; }
+    .code-body pre { white-space: pre-wrap; line-height: 1.9; }
+    .c-comment { color: #6A737D; } .c-key { color: var(--blue); }
+    .c-str { color: var(--green); } .c-punc { color: var(--muted); }
+    .c-fn { color: #D2A8FF; }
+
+    blockquote {
+      border-left: 3px solid var(--green); padding: 14px 20px; margin-top: 20px;
+      background: rgba(0,255,136,.05); border-radius: 0 8px 8px 0;
+      color: var(--muted); font-size: .95rem;
+    }
+    blockquote strong { color: var(--text); }
+
+    /* ── CERT CARDS ── */
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 16px; }
+    .cert-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 22px 24px; display: flex; align-items: center; gap: 18px;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .cert-card:hover { transform: translateY(-3px); }
+    .cert-card.oswe { border-left: 3px solid var(--red); }
+    .cert-card.ceh  { border-left: 3px solid var(--green); }
+    .cert-card.oswe:hover { box-shadow: 0 4px 24px rgba(255,68,68,.18); border-color: rgba(255,68,68,.5); }
+    .cert-card.ceh:hover  { box-shadow: 0 4px 24px rgba(0,255,136,.18); border-color: rgba(0,255,136,.5); }
+    .cert-icon { font-size: 2.2rem; flex-shrink: 0; }
+    .cert-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .cert-full { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+    .cert-meta { font-family: var(--mono); font-size: .78rem; margin-top: 6px; }
+    .cert-meta.red   { color: var(--red);   }
+    .cert-meta.green { color: var(--green);  }
+
+    /* ── TAGS ── */
+    .tag-group { margin-bottom: 22px; }
+    .tag-label { font-family: var(--mono); font-size: .75rem; color: var(--muted); margin-bottom: 10px; letter-spacing: 1px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 5px 13px; border-radius: 6px;
+      font-family: var(--mono); font-size: .8rem; font-weight: 500;
+      border: 1px solid; cursor: default; transition: transform .15s, box-shadow .15s;
+    }
+    .tag:hover { transform: translateY(-2px); box-shadow: 0 3px 12px rgba(0,0,0,.4); }
+    .tag-off  { color: var(--red);    border-color: rgba(255,68,68,.3);   background: rgba(255,68,68,.06);   }
+    .tag-def  { color: var(--green);  border-color: rgba(0,255,136,.3);  background: rgba(0,255,136,.06);  }
+    .tag-tool { color: var(--blue);   border-color: rgba(0,198,255,.3);  background: rgba(0,198,255,.06);  }
+    .tag-lang { color: var(--yellow); border-color: rgba(250,204,21,.3); background: rgba(250,204,21,.06); }
+    .tag-plat { color: var(--purple); border-color: rgba(167,139,250,.3);background: rgba(167,139,250,.06);}
+
+    /* ── STAT CARDS (pure CSS, no external) ── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; margin-bottom: 20px; }
+    .stat-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px 22px; text-align: center;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .stat-card:hover { transform: translateY(-3px); border-color: rgba(0,255,136,.35); box-shadow: 0 4px 20px rgba(0,255,136,.1); }
+    .stat-num { font-family: var(--mono); font-size: 2rem; font-weight: 700; color: var(--green); line-height: 1.1; }
+    .stat-label { font-size: .8rem; color: var(--muted); margin-top: 6px; letter-spacing: .5px; }
+
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px;
+      background: linear-gradient(to bottom, var(--green), var(--blue), transparent);
+    }
+    .tl-item { position: relative; margin-bottom: 30px; }
+    .tl-dot {
+      position: absolute; left: -24px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--green); border: 2px solid var(--bg);
+      box-shadow: 0 0 8px rgba(0,255,136,.6);
+    }
+    .tl-date  { font-family: var(--mono); font-size: .78rem; color: var(--green); margin-bottom: 4px; }
+    .tl-title { font-weight: 600; font-size: .95rem; color: var(--text); }
+    .tl-desc  { font-size: .85rem; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+    /* ── TERMINAL ── */
+    .terminal { background: #0A0E17; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .term-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); }
+    .term-title  { color: var(--muted); font-size: .8rem; font-family: var(--mono); margin-left: 8px; }
+    .term-body   { padding: 20px 24px; font-family: var(--mono); font-size: .88rem; line-height: 2; }
+    .t-prompt { color: var(--green); } .t-cmd { color: var(--text); }
+    .t-info   { color: var(--blue);  } .t-ok  { color: var(--green); }
+    .t-cursor { display: inline-block; width: 8px; height: 1em; background: var(--green); vertical-align: text-bottom; animation: blink .7s step-end infinite; }
+
+    /* ── CONNECT ── */
+    .connect-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 12px; }
+    .connect-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; background: var(--bg2);
+      border: 1px solid var(--border); border-radius: 10px;
+      text-decoration: none; color: var(--muted); font-size: .88rem;
+      transition: all .2s;
+    }
+    .connect-card:hover { border-color: var(--green); color: var(--text); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,255,136,.12); }
+    .connect-card svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 32px 20px 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-family: var(--mono); font-size: .82rem;
+    }
+    footer .quote { font-size: .9rem; color: var(--green); margin-bottom: 8px; font-style: italic; }
+
+    @media (max-width:600px) {
+      header h1 { font-size: 2.2rem; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .connect-grid { grid-template-columns: 1fr 1fr; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="grid-bg"></div>
+  <div class="avatar-ring"><div class="avatar-inner">🛡️</div></div>
+  <h1>nvth</h1>
+  <p class="subtitle">Cyber Security Engineer</p>
+  <p class="typing-line"><span id="typed"></span></p>
+  <div class="badge-row">
+    <span class="badge badge-green">⚡ Pentester</span>
+    <span class="badge badge-green">🏗️ Product Security</span>
+    <span class="badge badge-blue">📅 Since May 2021</span>
+  </div>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#about">About</a>
+  <a href="#certs">Certifications</a>
+  <a href="#expertise">Expertise</a>
+  <a href="#tools">Tools</a>
+  <a href="#stats">Stats</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#focus">Focus</a>
+  <a href="#connect">Connect</a>
+</nav>
+
+<main>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2 class="section-title"><span>👤</span> About Me</h2>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="code-filename">profile.py</span>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">#!/usr/bin/env python3</span>
+<span class="c-comment"># ─────────────────────────────────────────────</span>
+<span class="c-comment">#   nvth :: Cyber Security Engineer</span>
+<span class="c-comment"># ─────────────────────────────────────────────</span>
+
+<span class="c-fn">profile</span> <span class="c-punc">=</span> <span class="c-punc">{</span>
+    <span class="c-key">"name"</span>          <span class="c-punc">:</span> <span class="c-str">"nvth"</span><span class="c-punc">,</span>
+    <span class="c-key">"role"</span>          <span class="c-punc">:</span> <span class="c-punc">[</span><span class="c-str">"Pentester"</span><span class="c-punc">,</span> <span class="c-str">"Product Security"</span><span class="c-punc">],</span>
+    <span class="c-key">"start_date"</span>    <span class="c-punc">:</span> <span class="c-str">"May 2021"</span><span class="c-punc">,</span>
+    <span class="c-key">"certifications"</span><span class="c-punc">:</span> <span class="c-punc">{</span>
+        <span class="c-key">"OSWE"</span>   <span class="c-punc">:</span> <span class="c-str">"2024 — Offensive Security Web Expert"</span><span class="c-punc">,</span>
+        <span class="c-key">"CEH"</span>    <span class="c-punc">:</span> <span class="c-str">"2023 — Certified Ethical Hacker"</span><span class="c-punc">,</span>
+    <span class="c-punc">},</span>
+    <span class="c-key">"specialties"</span>   <span class="c-punc">:</span> <span class="c-punc">[</span>
+        <span class="c-str">"Web Application Penetration Testing"</span><span class="c-punc">,</span>
+        <span class="c-str">"Product Security"</span><span class="c-punc">,</span>
+        <span class="c-str">"Vulnerability Research"</span><span class="c-punc">,</span>
+        <span class="c-str">"Secure Code Review"</span><span class="c-punc">,</span>
+    <span class="c-punc">],</span>
+    <span class="c-key">"mindset"</span>       <span class="c-punc">:</span> <span class="c-str">"Think like an attacker, defend like an engineer."</span><span class="c-punc">,</span>
+<span class="c-punc">}</span></pre></div>
+    </div>
+    <blockquote>
+      🛡️ <strong>Offensive mindset. Defensive purpose.</strong><br/>
+      Passionate about breaking things the right way — to build them stronger.<br/>
+      Started hacking ethically in <strong>May 2021</strong> and never looked back.
+    </blockquote>
+  </section>
+
+  <!-- CERTS -->
+  <section id="certs">
+    <h2 class="section-title"><span>🏆</span> Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert-card oswe">
+        <div class="cert-icon">🔴</div>
+        <div>
+          <div class="cert-name">OSWE</div>
+          <div class="cert-full">Offensive Security Web Expert</div>
+          <div class="cert-meta red">2024 · Offensive Security</div>
+        </div>
+      </div>
+      <div class="cert-card ceh">
+        <div class="cert-icon">🟢</div>
+        <div>
+          <div class="cert-name">CEH</div>
+          <div class="cert-full">Certified Ethical Hacker</div>
+          <div class="cert-meta green">2023 · EC-Council</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section id="expertise">
+    <h2 class="section-title"><span>🔐</span> Security Expertise</h2>
+    <div class="tag-group">
+      <div class="tag-label">// OFFENSIVE</div>
+      <div class="tags">
+        <span class="tag tag-off">Penetration Testing</span>
+        <span class="tag tag-off">Red Team Operations</span>
+        <span class="tag tag-off">Vulnerability Research</span>
+        <span class="tag tag-off">Exploit Development</span>
+      </div>
+    </div>
+    <div class="tag-group">
+      <div class="tag-label">// DEFENSIVE</div>
+      <div class="tags">
+        <span class="tag tag-def">Product Security</span>
+        <span class="tag tag-def">Secure Code Review</span>
+        <span class="tag tag-def">OWASP Top 10</span>
+        <span class="tag tag-def">Bug Bounty</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section id="tools">
+    <h2 class="section-title"><span>🛠️</span> Tools &amp; Stack</h2>
+    <div class="tag-group">
+      <div class="tag-label">// OFFENSIVE TOOLS</div>
+      <div class="tags">
+        <span class="tag tag-tool">Burp Suite</span>
+        <span class="tag tag-tool">Metasploit</span>
+        <span class="tag tag-tool">Nmap</span>
+        <span class="tag tag-tool">SQLMap</span>
+        <span class="tag tag-tool">Nuclei</span>
+        <span class="tag tag-tool">ffuf</span>
+      </div>
+    </div>
+    <div class="tag-group">
+      <div class="tag-label">// LANGUAGES</div>
+      <div class="tags">
+        <span class="tag tag-lang">Python</span>
+        <span class="tag tag-lang">JavaScript</span>
+        <span class="tag tag-lang">SQL</span>
+      </div>
+    </div>
+    <div class="tag-group">
+      <div class="tag-label">// PLATFORMS</div>
+      <div class="tags">
+        <span class="tag tag-plat">Kali Linux</span>
+        <span class="tag tag-plat">Docker</span>
+        <span class="tag tag-plat">Git</span>
+        <span class="tag tag-plat">Wireshark</span>
+        <span class="tag tag-plat">VS Code</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS — pure CSS, no external API -->
+  <section id="stats">
+    <h2 class="section-title"><span>📊</span> Experience &amp; Skills</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="years-exp">0+</div>
+        <div class="stat-label">Years in Cyber Security</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Certifications Earned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Core Domains</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Things to Break</div>
+      </div>
+    </div>
+
+
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <h2 class="section-title"><span>📅</span> Timeline</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2024</div>
+        <div class="tl-title">🔴 OSWE — Offensive Security Web Expert</div>
+        <div class="tl-desc">Advanced web application exploitation &amp; secure code review certification by Offensive Security</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2023</div>
+        <div class="tl-title">🟢 CEH — Certified Ethical Hacker</div>
+        <div class="tl-desc">Comprehensive ethical hacking methodology certification by EC-Council</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--blue);box-shadow:0 0 8px rgba(0,198,255,.6)"></div>
+        <div class="tl-date">May 2021</div>
+        <div class="tl-title">🚀 Started Cyber Security Career</div>
+        <div class="tl-desc">Began professional journey in Penetration Testing &amp; Product Security</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOCUS -->
+  <section id="focus">
+    <h2 class="section-title"><span>🎯</span> Current Focus</h2>
+    <div class="terminal">
+      <div class="term-header">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="term-title">terminal — nvth@kali:~</span>
+      </div>
+      <div class="term-body">
+        <div><span class="t-prompt">nvth@kali</span><span class="t-cmd">:~$ whoami --focus</span></div>
+        <div><span class="t-info">[*]</span> Web Application Penetration Testing</div>
+        <div><span class="t-info">[*]</span> API Security Assessment</div>
+        <div><span class="t-info">[*]</span> Secure SDLC Integration (Product Security)</div>
+        <div><span class="t-info">[*]</span> Vulnerability Research &amp; Exploit Development</div>
+        <div><span class="t-info">[*]</span> Red Team Operations</div>
+        <div><span class="t-ok">[+]</span> Always learning. Always breaking. Always improving.</div>
+        <div style="margin-top:8px"><span class="t-prompt">nvth@kali</span><span class="t-cmd">:~$</span> <span class="t-cursor"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECT -->
+  <section id="connect">
+    <h2 class="section-title"><span>🌐</span> Connect With Me</h2>
+    <div class="connect-grid">
+      <a href="https://github.com/nvth" class="connect-card">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/nvth" class="connect-card">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://hackerone.com/nvth" class="connect-card">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.01 0L0 4.01v15.98L7.01 24l.49-.28V.28zm9.98 0l-.49.28v23.44l.49.28L24 19.99V4.01zM8.99 7.53v8.94L12 18.44l3.01-1.97V7.53L12 5.56z"/></svg>
+        HackerOne
+      </a>
+      <a href="mailto:nvth@example.com" class="connect-card">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+        Email
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p class="quote">"The quieter you become, the more you can hear." — Kali Linux motto</p>
+  <p>nvth · Cyber Security Engineer · Since May 2021</p>
+</footer>
+
+<script>
+  // Typing animation
+  const lines = [
+    "Penetration Tester | Red Team",
+    "Product Security | OSWE 2024",
+    "Hacking ethically since May 2021",
+  ];
+  let li = 0, ci = 0, del = false;
+  const el = document.getElementById('typed');
+  function type() {
+    const cur = lines[li];
+    if (!del) {
+      el.textContent = cur.slice(0, ++ci);
+      if (ci === cur.length) { del = true; setTimeout(type, 1800); return; }
+    } else {
+      el.textContent = cur.slice(0, --ci);
+      if (ci === 0) { del = false; li = (li + 1) % lines.length; }
+    }
+    setTimeout(type, del ? 38 : 68);
+  }
+  type();
+
+  // Dynamic Years of Experience
+  const startYear = 2021;
+  const currentYear = new Date().getFullYear();
+  document.getElementById('years-exp').textContent = (currentYear - startYear) + '+';
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section').forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
