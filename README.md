@@ -1,23 +1,16 @@
-## Kali
-### Auto login with root user in kali
-After "researching" for half a day here is how to auto login in 2020.1 version
+<div align="center">
 
-nano /etc/lightdm/lightdm.conf # and add these lines in [Seat:*] section
+## 🗺️ Navigation
 
-autologin-user=root
-autologin-user-timeout=o
+| | Link | Mô tả |
+|:-:|:-----|:------|
+| 👤 | [About Me](./nvth.md) | Hồ sơ cá nhân, chứng chỉ, kỹ năng |
+| 📝 | [Blog](./blog/) | Write-ups, nghiên cứu bảo mật, CTF |
+| 🗂️ | [Projects](./projects/) | Các dự án & nghiên cứu nổi bật |
+| 🌐 | [Contact](./contact.md) | Liên hệ & mạng xã hội |
 
-nano /etc/pam.d/lightdm-autologin #Comment out below line
-#auth required pam_succeed_if.so user != root quiet_success
+<br/>
 
-restart and hapy root
-## Trick
-### Interactive Shell without Python, socat
+[![Profile Views](https://komarev.com/ghpvc/?username=nvth&style=for-the-badge&color=00FF88&labelColor=0D1117&label=VISITORS)](https://github.com/nvth)
 
-After `nc -lvnp 4231`: we got a shell 
-Up non interactive shell to interactive shell (no python, no socat running on machine)
-```sh
-/usr/bin/script -qc /bin/bash /dev/null
-Ctr-Z
-stty raw -echo; fg; reset
-```
+</div>
