@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nvth's Blog — Security Write-ups & Research</title>
+  <meta name="description" content="nvth's blog — Penetration testing write-ups, security research, CTF solutions and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFDE00;
+      --panel:   #FFFFFF;
+      --border:  #000000;
+      --cyan:    #00E5FF;
+      --magenta: #FF007F;
+      --lime:    #39FF14;
+      --purple:  #9D00FF;
+      --red:     #FF3333;
+      --orange:  #FF6B00;
+      --text:    #000000;
+      --muted:   #444444;
+      --font-body:    'Comic Neue', cursive, sans-serif;
+      --font-heading: 'Bangers', cursive;
+      --shadow: 6px 6px 0px #000;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(#000 10%, transparent 11%);
+      background-size: 20px 20px;
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: var(--panel); border-left: 3px solid #000; }
+    ::-webkit-scrollbar-thumb { background: var(--magenta); border: 3px solid #000; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--panel);
+      border-bottom: 4px solid #000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 32px; flex-wrap: wrap; gap: 10px;
+      box-shadow: 0 4px 0px #000;
+    }
+    .nav-brand {
+      font-family: var(--font-heading); font-size: 2rem;
+      color: var(--magenta); -webkit-text-stroke: 1px #000;
+      text-shadow: 3px 3px 0px #000; text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .nav-links a {
+      color: var(--text); text-decoration: none; font-size: 1.1rem; font-weight: bold;
+      padding: 6px 14px; border: 2px solid #000; background: var(--bg);
+      box-shadow: 3px 3px 0px #000; transition: all .1s;
+    }
+    .nav-links a:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #000; background: var(--cyan); }
+    .nav-links a.active { background: var(--magenta); color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center; padding: 70px 20px 50px;
+      position: relative;
+    }
+    .hero-burst {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px; height: 350px;
+      background: var(--cyan);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      z-index: 0; border: 4px solid #000;
+      animation: spin 40s linear infinite;
+    }
+    @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3.5rem, 9vw, 6rem);
+      -webkit-text-stroke: 3px #000;
+      color: #fff;
+      text-shadow: 6px 6px 0px var(--magenta);
+      letter-spacing: 3px;
+      transform: rotate(-2deg);
+      display: inline-block;
+    }
+    .hero-sub {
+      display: inline-block; background: #000; color: var(--bg);
+      font-size: 1.4rem; font-weight: bold; padding: 8px 20px;
+      margin-top: 16px; transform: rotate(1deg);
+      border: 3px solid var(--panel); box-shadow: 4px 4px 0px var(--red);
+    }
+    .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .hero-tag {
+      background: var(--panel); border: 3px solid #000; box-shadow: 3px 3px 0px #000;
+      padding: 6px 14px; font-weight: bold; font-size: 1rem;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 50px 24px; }
+
+    /* ── FEATURED ── */
+    .featured-label {
+      font-family: var(--font-heading); font-size: 2.8rem;
+      letter-spacing: 2px; margin-bottom: 20px;
+      text-shadow: 3px 3px 0px var(--orange);
+      -webkit-text-stroke: 1px #000;
+    }
+
+    .post-featured {
+      background: var(--panel); border: 4px solid #000; box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      margin-bottom: 50px; transform: rotate(-1deg);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .post-featured:hover { transform: rotate(0deg) scale(1.01); box-shadow: 10px 10px 0px #000; }
+
+    .post-featured-thumb {
+      background: var(--cyan);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8rem; padding: 40px;
+      border-right: 4px solid #000;
+    }
+    .post-featured-body { padding: 30px; }
+    .post-tag {
+      display: inline-block; font-family: var(--font-heading); font-size: 1.1rem;
+      letter-spacing: 1px; padding: 4px 12px; border: 3px solid #000;
+      box-shadow: 3px 3px 0px #000; margin-bottom: 14px;
+    }
+    .tag-web  { background: var(--red); color: #fff; }
+    .tag-ctf  { background: var(--lime); }
+    .tag-api  { background: var(--cyan); }
+    .tag-misc { background: var(--purple); color: #fff; }
+    .tag-prod { background: var(--orange); color: #fff; }
+
+    .post-featured-body h2 {
+      font-family: var(--font-heading); font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 10px;
+      line-height: 1.1;
+    }
+    .post-meta { font-size: 1rem; font-weight: bold; color: var(--muted); margin-bottom: 14px; }
+    .post-excerpt { font-size: 1.15rem; line-height: 1.6; margin-bottom: 20px; }
+    .read-more {
+      display: inline-block; background: var(--magenta); color: #fff;
+      font-family: var(--font-heading); font-size: 1.4rem; letter-spacing: 1px;
+      padding: 8px 20px; border: 3px solid #000; box-shadow: 4px 4px 0px #000;
+      text-decoration: none; transition: all .1s;
+    }
+    .read-more:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
+
+    /* ── GRID ── */
+    .section-title {
+      font-family: var(--font-heading); font-size: 2.5rem;
+      letter-spacing: 2px; margin-bottom: 24px;
+      text-shadow: 3px 3px 0px var(--cyan);
+      -webkit-text-stroke: 1px #000;
+    }
+    .posts-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px; margin-bottom: 60px;
+    }
+    .post-card {
+      background: var(--panel); border: 4px solid #000; box-shadow: var(--shadow);
+      display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .post-card:nth-child(odd)  { transform: rotate(1deg); }
+    .post-card:nth-child(even) { transform: rotate(-1deg); }
+    .post-card:hover { transform: rotate(0deg) scale(1.03); box-shadow: 10px 10px 0px #000; }
+
+    .post-thumb {
+      font-size: 4rem; text-align: center; padding: 30px;
+      border-bottom: 4px solid #000;
+    }
+    .post-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .post-body h3 { font-family: var(--font-heading); font-size: 1.6rem; letter-spacing: 1px; margin: 10px 0 8px; line-height: 1.2; }
+    .post-body p { font-size: 1.05rem; line-height: 1.5; flex: 1; margin-bottom: 16px; }
+    .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+    .post-date { font-size: .9rem; font-weight: bold; color: var(--muted); }
+    .card-read-more {
+      background: var(--bg); color: #000; font-family: var(--font-heading); font-size: 1.2rem;
+      padding: 5px 14px; border: 3px solid #000; box-shadow: 3px 3px 0px #000;
+      text-decoration: none; transition: all .1s; letter-spacing: 1px;
+    }
+    .card-read-more:hover { background: var(--lime); transform: translate(-2px,-2px); box-shadow: 5px 5px 0px #000; }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--cyan); border: 4px solid #000; box-shadow: var(--shadow);
+      padding: 36px; text-align: center; margin-bottom: 60px;
+      transform: rotate(1deg);
+    }
+    .newsletter h2 { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 10px; }
+    .newsletter p { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; }
+    .nl-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .nl-form input {
+      padding: 12px 18px; font-size: 1.1rem; font-family: var(--font-body);
+      border: 3px solid #000; box-shadow: 3px 3px 0px #000; outline: none;
+      min-width: 280px; font-weight: bold;
+    }
+    .nl-form button {
+      background: var(--magenta); color: #fff;
+      font-family: var(--font-heading); font-size: 1.4rem; letter-spacing: 1px;
+      padding: 12px 24px; border: 3px solid #000; box-shadow: 4px 4px 0px #000;
+      cursor: pointer; transition: all .1s;
+    }
+    .nl-form button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--panel); border-top: 6px dashed #000;
+      text-align: center; padding: 36px 20px;
+      font-size: 1.1rem; font-weight: bold;
+    }
+    .footer-quote { font-family: var(--font-heading); font-size: 2rem; color: var(--red); margin-bottom: 8px; text-shadow: 2px 2px 0px #000; -webkit-text-stroke: 1px #000; }
+
+    @media (max-width: 700px) {
+      .post-featured { grid-template-columns: 1fr; }
+      .post-featured-thumb { border-right: none; border-bottom: 4px solid #000; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="/">🦈 nvth</a>
+  <div class="nav-links">
+    <a href="/">🏠 Home</a>
+    <a href="/profile">👤 About</a>
+    <a href="/blogs" class="active">📝 Blog</a>
+    <a href="/contact">🌐 Contact</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-burst"></div>
+  <div class="hero-content">
+    <h1>THE BLOG!</h1>
+    <div class="hero-sub">Write-ups · Research · CTF · Shenanigans</div>
+    <div class="hero-tags">
+      <span class="hero-tag">💣 Web Exploitation</span>
+      <span class="hero-tag">🏴 CTF Solutions</span>
+      <span class="hero-tag">🔑 Bug Bounty</span>
+      <span class="hero-tag">🛡️ Product Security</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── FEATURED POST ── -->
+  <div class="featured-label">⭐ Featured Post!</div>
+  <div class="post-featured">
+    <div class="post-featured-thumb">🕸️</div>
+    <div class="post-featured-body">
+      <span class="post-tag tag-web">WEB APP PENTESTING</span>
+      <h2>Bypassing WAF to Full RCE — A Wild Ride</h2>
+      <div class="post-meta">📅 June 15, 2024 &nbsp;·&nbsp; ⏱ 12 min read</div>
+      <p class="post-excerpt">
+        Sometimes WAFs are just politely-worded suggestions. In this write-up, I document
+        how a chain of seemingly minor misconfigurations — a reflected parameter, an
+        over-permissive CORS policy, and a forgotten debug endpoint — led to full Remote
+        Code Execution on a target. POW!
+      </p>
+      <a href="#" class="read-more">READ THE CHAOS →</a>
+    </div>
+  </div>
+
+  <!-- ── LATEST POSTS ── -->
+  <div class="section-title">💥 Latest Posts!</div>
+  <div class="posts-grid">
+
+    <!-- Post 1 -->
+    <div class="post-card">
+      <div class="post-thumb" style="background: #fff0f0;">🏁</div>
+      <div class="post-body">
+        <span class="post-tag tag-ctf">CTF WRITE-UP</span>
+        <h3>HackTheBox — "Phantom" Machine Walkthrough</h3>
+        <p>A thorough breakdown of the Phantom machine: initial foothold via SSRF, privilege escalation through a misconfigured sudo rule. BAM!</p>
+        <div class="post-footer">
+          <span class="post-date">May 30, 2024</span>
+          <a href="#" class="card-read-more">READ →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="post-card">
+      <div class="post-thumb" style="background: #f0fff0;">🔑</div>
+      <div class="post-body">
+        <span class="post-tag tag-api">API SECURITY</span>
+        <h3>IDOR in the Wild — $1500 Bug Bounty Report</h3>
+        <p>How a simple numeric ID parameter led to accessing any user's private data. The fix was trivial. The bounty was not.</p>
+        <div class="post-footer">
+          <span class="post-date">Apr 18, 2024</span>
+          <a href="#" class="card-read-more">READ →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post 3 -->
+    <div class="post-card">
+      <div class="post-thumb" style="background: #f0f0ff;">🔐</div>
+      <div class="post-body">
+        <span class="post-tag tag-prod">PRODUCT SECURITY</span>
+        <h3>Building a Threat Model from Scratch (That Your Team Will Actually Use)</h3>
+        <p>Threat modeling doesn't have to be a 200-slide deck nobody reads. Here's how I build lightweight, effective models that developers actually engage with.</p>
+        <div class="post-footer">
+          <span class="post-date">Mar 5, 2024</span>
+          <a href="#" class="card-read-more">READ →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post 4 -->
+    <div class="post-card">
+      <div class="post-thumb" style="background: #fffbe0;">💉</div>
+      <div class="post-body">
+        <span class="post-tag tag-web">WEB APP PENTESTING</span>
+        <h3>SQL Injection in 2024: Still Not Dead (Unfortunately)</h3>
+        <p>A deep dive into modern SQLi techniques, including blind time-based injection and bypassing modern WAFs using encoding tricks.</p>
+        <div class="post-footer">
+          <span class="post-date">Feb 12, 2024</span>
+          <a href="#" class="card-read-more">READ →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post 5 -->
+    <div class="post-card">
+      <div class="post-thumb" style="background: #f5e0ff;">🎯</div>
+      <div class="post-body">
+        <span class="post-tag tag-ctf">CTF WRITE-UP</span>
+        <h3>OSWE Exam Experience — Was It Worth It?</h3>
+        <p>My honest, unfiltered review of the OSWE certification journey: the prep, the 48-hour exam, the coffee consumed, and the lessons learned.</p>
+        <div class="post-footer">
+          <span class="post-date">Jun 28, 2024</span>
+          <a href="#" class="card-read-more">READ →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post 6 -->
+    <div class="post-card">
+      <div class="post-thumb" style="background: #e0fff0;">🛠️</div>
+      <div class="post-body">
+        <span class="post-tag tag-misc">TOOLING</span>
+        <h3>My Nuclei Template Collection for Bug Bounty</h3>
+        <p>I've been building custom Nuclei templates over the past year. Here's a curated set targeting common misconfigurations across SaaS platforms.</p>
+        <div class="post-footer">
+          <span class="post-date">Jan 20, 2024</span>
+          <a href="#" class="card-read-more">READ →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── NEWSLETTER ── -->
+  <div class="newsletter">
+    <h2>📬 GET NOTIFIED!</h2>
+    <p>New write-ups drop irregularly. Subscribe so you don't miss the chaos.</p>
+    <div class="nl-form">
+      <input type="email" placeholder="your@email.com" />
+      <button type="button">SUBSCRIBE! 💥</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-quote">"KEEP HACKING (ETHICALLY)!"</div>
+  <p>nvth · Cyber Security Engineer · Since May 2021</p>
+  <p style="margin-top: 8px; color: var(--muted);">
+    <a href="/" style="color: inherit;">Home</a> &nbsp;·&nbsp;
+    <a href="/profile" style="color: inherit;">About</a> &nbsp;·&nbsp;
+    <a href="/blogs" style="color: inherit;">Blog</a>
+  </p>
+</footer>
+
+</body>
+</html>
