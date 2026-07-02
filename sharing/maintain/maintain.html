@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Under Maintenance — nvth</title>
+  <meta name="description" content="This page is currently under maintenance. nvth will be back soon!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFDE00;
+      --panel:   #FFFFFF;
+      --border:  #000000;
+      --cyan:    #00E5FF;
+      --magenta: #FF007F;
+      --lime:    #39FF14;
+      --red:     #FF3333;
+      --orange:  #FF6B00;
+      --font-body:    'Comic Neue', cursive, sans-serif;
+      --font-heading: 'Bangers', cursive;
+      --shadow: 6px 6px 0px #000;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(#000 10%, transparent 11%);
+      background-size: 20px 20px;
+      font-family: var(--font-body);
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* ── FLOATING GEARS (CSS only) ── */
+    .gear {
+      position: fixed;
+      font-size: 5rem;
+      opacity: 0.12;
+      pointer-events: none;
+      animation: spin-gear 8s linear infinite;
+      z-index: 0;
+    }
+    .gear-1 { top: 5%;  left: 3%;  animation-duration: 10s; font-size: 7rem; }
+    .gear-2 { top: 10%; right: 5%; animation-duration: 7s; animation-direction: reverse; }
+    .gear-3 { bottom: 8%; left: 6%; animation-duration: 12s; animation-direction: reverse; font-size: 4rem; }
+    .gear-4 { bottom: 5%; right: 3%; animation-duration: 9s; font-size: 6rem; }
+    @keyframes spin-gear { 100% { transform: rotate(360deg); } }
+
+    /* ── STARBURST ── */
+    .starburst {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 500px;
+      background: var(--cyan);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+                          50% 70%, 21% 91%, 32% 57%, 2%  35%, 39% 35%);
+      z-index: 0; opacity: 0.25;
+      animation: spin-gear 30s linear infinite;
+      pointer-events: none;
+    }
+
+    /* ── MAIN CARD ── */
+    .card {
+      position: relative; z-index: 2;
+      background: var(--panel);
+      border: 5px solid #000;
+      box-shadow: 10px 10px 0px #000;
+      padding: 48px 52px;
+      max-width: 640px;
+      width: 100%;
+      transform: rotate(-1deg);
+    }
+
+    /* Caution tape top */
+    .card::before {
+      content: '⚠ CAUTION ⚠ CAUTION ⚠ CAUTION ⚠ CAUTION ⚠ CAUTION ⚠';
+      position: absolute; top: -22px; left: -5px; right: -5px;
+      background: repeating-linear-gradient(
+        -45deg,
+        #000 0, #000 14px,
+        var(--bg) 14px, var(--bg) 28px
+      );
+      color: #000; font-family: var(--font-body);
+      font-weight: bold; font-size: 0.75rem; letter-spacing: 2px;
+      text-align: center; overflow: hidden;
+      height: 22px; line-height: 22px;
+      border: 3px solid #000;
+    }
+
+    .emoji-big {
+      font-size: 6rem;
+      display: block;
+      margin-bottom: 10px;
+      animation: wobble 2.5s ease-in-out infinite;
+    }
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-8deg); }
+      50%       { transform: rotate(8deg); }
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      letter-spacing: 3px;
+      -webkit-text-stroke: 2px #000;
+      color: var(--magenta);
+      text-shadow: 5px 5px 0px #000;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      display: inline-block;
+      background: #000; color: var(--bg);
+      font-size: 1.3rem; font-weight: bold;
+      padding: 6px 18px; margin-bottom: 28px;
+      transform: rotate(1deg);
+      border: 2px solid var(--panel);
+      box-shadow: 3px 3px 0px var(--red);
+    }
+
+    /* Speech bubble */
+    .speech {
+      background: var(--cyan);
+      border: 4px solid #000;
+      border-radius: 20px;
+      padding: 18px 22px;
+      font-size: 1.2rem; font-weight: bold;
+      position: relative; margin-bottom: 38px;
+      box-shadow: 4px 4px 0px #000;
+    }
+    .speech::after {
+      content: ''; position: absolute;
+      bottom: -26px; left: 50%; transform: translateX(-50%);
+      border-width: 22px 14px 0;
+      border-style: solid;
+      border-color: #000 transparent transparent transparent;
+    }
+    .speech::before {
+      content: ''; position: absolute;
+      bottom: -16px; left: 50%; transform: translateX(-50%);
+      border-width: 16px 10px 0;
+      border-style: solid;
+      border-color: var(--cyan) transparent transparent transparent;
+      z-index: 1;
+    }
+
+    /* Countdown timer */
+    .countdown-label {
+      font-family: var(--font-heading); font-size: 1.5rem; letter-spacing: 2px;
+      margin: 40px 0 12px; color: #000;
+    }
+    .timer {
+      display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .time-block {
+      background: #000; color: var(--lime);
+      font-family: var(--font-heading); font-size: 2.8rem; letter-spacing: 2px;
+      padding: 14px 20px; min-width: 90px;
+      box-shadow: 4px 4px 0px var(--magenta);
+      position: relative;
+    }
+    .time-label {
+      display: block; font-family: var(--font-body);
+      font-size: 0.8rem; color: #8B949E; margin-top: 6px;
+      font-weight: bold; letter-spacing: 1px;
+    }
+
+    /* Back button */
+    .btn-home {
+      display: inline-block;
+      background: var(--magenta); color: #fff;
+      font-family: var(--font-heading); font-size: 1.6rem; letter-spacing: 2px;
+      padding: 12px 28px; border: 4px solid #000; box-shadow: var(--shadow);
+      text-decoration: none; transition: all .1s;
+    }
+    .btn-home:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0px #000;
+      background: var(--red);
+    }
+
+    /* SFX burst */
+    .sfx {
+      position: fixed; z-index: 3; pointer-events: none;
+      font-family: var(--font-heading); font-size: 2.5rem; letter-spacing: 2px;
+      -webkit-text-stroke: 1px #000; color: var(--orange);
+      text-shadow: 3px 3px 0px #000;
+      animation: pop-sfx 4s ease-in-out infinite;
+    }
+    .sfx-1 { top: 12%; left: 8%;  animation-delay: 0s;   color: var(--red); }
+    .sfx-2 { top: 15%; right: 7%; animation-delay: 1.5s; color: var(--magenta); }
+    .sfx-3 { bottom: 15%; left: 10%; animation-delay: 0.8s; font-size: 2rem; }
+    .sfx-4 { bottom: 12%; right: 8%; animation-delay: 2.2s; color: var(--orange); }
+    @keyframes pop-sfx {
+      0%, 100% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+      30%, 70%  { opacity: 1; transform: scale(1) rotate(5deg); }
+    }
+
+    @media (max-width: 520px) {
+      .card { padding: 36px 24px; }
+      h1 { font-size: 2.5rem; }
+      .time-block { font-size: 2rem; min-width: 70px; padding: 10px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background decorations -->
+  <div class="starburst"></div>
+  <div class="gear gear-1">⚙️</div>
+  <div class="gear gear-2">⚙️</div>
+  <div class="gear gear-3">⚙️</div>
+  <div class="gear gear-4">⚙️</div>
+
+  <!-- Comic SFX -->
+  <div class="sfx sfx-1">POW!</div>
+  <div class="sfx sfx-2">ZAP!</div>
+  <div class="sfx sfx-3">BZZT!</div>
+  <div class="sfx sfx-4">WRR!</div>
+
+  <!-- Main card -->
+  <div class="card">
+    <span class="emoji-big">🔧</span>
+    <h1>MAINTENANCE!</h1>
+    <div class="subtitle">We'll be right back, we promise!</div>
+
+    <div class="speech">
+      🦈 nvth is busy breaking — and fixing — things right now.<br/>
+      <strong>Go grab a coffee! ☕</strong>
+    </div>
+
+    <div class="countdown-label">⏱ ESTIMATED TIME</div>
+    <div class="timer">
+      <div class="time-block">
+        <span>--</span>
+        <span class="time-label">HOURS</span>
+      </div>
+      <div class="time-block">
+        <span>--</span>
+        <span class="time-label">MINS</span>
+      </div>
+      <div class="time-block">
+        <span>--</span>
+        <span class="time-label">SECS</span>
+      </div>
+    </div>
+
+    <a href="/" class="btn-home">← GO HOME</a>
+  </div>
+
+  <script>
+    // No countdown — dashes displayed by default
+    // To enable a live countdown, replace the -- spans with:
+    //   <span id="hours">00</span> etc.
+    // Then add:
+    //   const TARGET = new Date("YYYY-MM-DDTHH:MM:SS");
+    //   ... countdown logic ...
+  </script>
+</body>
+</html>
