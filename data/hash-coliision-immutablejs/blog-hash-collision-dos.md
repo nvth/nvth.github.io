@@ -1438,7 +1438,9 @@ Ra ngoài chạm cỏ thôi các bạn yêu :))
 À trước khi ra ngoài tranh thủ cắm AI agent, rồi đi chơi về nhà claim thành quả thôi. Hai tuần gần đây mình đang nghiện AI, một phần do Codex nó đang free 1 tháng.
 
 ## Show Respect
+
 Codex - PoC creater
+
 ChatGPT - Blog editer
 
 ## References
