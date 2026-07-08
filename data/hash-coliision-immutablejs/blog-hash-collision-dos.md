@@ -1,11 +1,11 @@
-﻿# CVE-2026-59880: Vua DOS Immutable.js
+﻿# CVE-2026-59880: Hash-collision algorithmic complexity denial of service in Immutable.Map/Set
 
 
 ## Intro ngắn
 
-Đây là câu chuyện về CVE đầu tiên của mình: `CVE-2026-59880`, một lỗi Hash Collision Denial of Service trong Immutable.js.
+Đây là CVE đầu tiên của mình: `CVE-2026-59880`, một lỗi Hash Collision Denial of Service trong Immutable.js.
 
-Nói thật đơn giản: nếu một ứng dụng nhận dữ liệu từ người dùng rồi đưa các `key` đó vào `Immutable.Map` hoặc `Immutable.Set`, attacker có thể chuẩn bị nhiều `key` khác nhau nhưng cố tình làm chúng rơi vào cùng một "xô chứa". Khi đó, thay vì xử lý nhanh như bình thường, thư viện phải lục từng món trong một danh sách dài. Kết quả là CPU tăng mạnh, request chậm, thậm chí server có thể bị nghẽn.
+Chung chung thì như sau: nếu một ứng dụng nhận dữ liệu từ người dùng rồi đưa các `key` đó vào `Immutable.Map` hoặc `Immutable.Set`, attacker có thể chuẩn bị nhiều `key` khác nhau nhưng "vô tình" làm chúng rơi vào cùng một "hộp". Khi đó, thay vì xử lý nhanh như bình thường, thư viện phải lục từng `value` trong một danh sách dài. Kết quả là CPU tăng mạnh, request chậm, thậm chí server có thể bị nghẽn.
 
 Advisory công khai:
 
@@ -21,7 +21,7 @@ Advisory công khai:
 
 ### Immutable.js là gì?
 
-Immutable.js là một thư viện JavaScript cung cấp các cấu trúc dữ liệu "immutable", nghĩa là dữ liệu không bị sửa trực tiếp. Khi bạn thay đổi dữ liệu, thư viện tạo ra một phiên bản mới, trong khi vẫn tái sử dụng phần lớn cấu trúc cũ để tiết kiệm bộ nhớ và tăng hiệu năng.
+Immutable.js là một thư viện JavaScript cung cấp các cấu trúc dữ liệu "immutable", nghĩa là dữ liệu không bị sửa trực tiếp. Khi bạn thay đổi dữ liệu, thư viện tạo ra một phiên bản mới, trong khi vẫn tái sử dụng phần lớn cấu trúc cũ để tiết kiệm bộ nhớ và tăng hiệu năng. Ờ, nhìn chung là như vậy.
 
 Ví dụ:
 
