@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nvth Blog | Security Research</title>
+  <meta name="description" content="Security write-ups, vulnerability research, and notes by nvth." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffde00;
+      --panel: #ffffff;
+      --border: #000000;
+      --cyan: #00e5ff;
+      --magenta: #ff007f;
+      --lime: #39ff14;
+      --purple: #9d00ff;
+      --red: #ff3333;
+      --orange: #ff6b00;
+      --text: #000000;
+      --muted: #444444;
+      --font-body: "Comic Neue", cursive, sans-serif;
+      --font-heading: "Bangers", cursive;
+      --shadow: 6px 6px 0 #000;
+      --shadow-big: 10px 10px 0 #000;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background-color: var(--bg);
+      background-image: radial-gradient(#000 10%, transparent 11%);
+      background-size: 20px 20px;
+      color: var(--text);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: var(--panel); border-left: 3px solid #000; }
+    ::-webkit-scrollbar-thumb { background: var(--magenta); border: 3px solid #000; }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 12px 30px;
+      background: var(--panel);
+      border-bottom: 4px solid #000;
+      box-shadow: 0 4px 0 #000;
+    }
+    .nav-brand {
+      color: var(--magenta);
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      letter-spacing: 1px;
+      text-decoration: none;
+      text-shadow: 3px 3px 0 #000;
+      -webkit-text-stroke: 1px #000;
+    }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .nav-links a {
+      color: #000;
+      background: var(--bg);
+      border: 3px solid #000;
+      box-shadow: 3px 3px 0 #000;
+      font-weight: 700;
+      padding: 6px 14px;
+      text-decoration: none;
+      transition: transform .12s, box-shadow .12s, background .12s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--cyan);
+      box-shadow: 5px 5px 0 #000;
+      transform: translate(-2px, -2px);
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 76px 24px 62px;
+      text-align: center;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 0;
+      width: 370px;
+      height: 370px;
+      transform: translate(-50%, -50%);
+      background: var(--cyan);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      border: 5px solid #000;
+      animation: spin 38s linear infinite;
+    }
+    @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 {
+      display: inline-block;
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: clamp(3.5rem, 10vw, 6.5rem);
+      letter-spacing: 3px;
+      line-height: .95;
+      text-shadow: 6px 6px 0 var(--magenta), 10px 10px 0 #000;
+      -webkit-text-stroke: 3px #000;
+      transform: rotate(-2deg);
+    }
+    .hero-sub {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 8px 18px;
+      background: #000;
+      color: var(--bg);
+      border: 3px solid #fff;
+      box-shadow: 4px 4px 0 var(--red);
+      font-size: 1.25rem;
+      font-weight: 700;
+      transform: rotate(1deg);
+    }
+    .sfx {
+      position: absolute;
+      z-index: 1;
+      color: var(--orange);
+      font-family: var(--font-heading);
+      font-size: clamp(1.7rem, 4vw, 3.2rem);
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0 #000;
+      -webkit-text-stroke: 1px #000;
+      animation: pop 4s ease-in-out infinite;
+    }
+    .sfx.left { top: 18%; left: 7%; color: var(--red); }
+    .sfx.right { top: 24%; right: 7%; color: var(--purple); animation-delay: 1.2s; }
+    @keyframes pop {
+      0%, 100% { opacity: .18; transform: scale(.82) rotate(-8deg); }
+      48%, 68% { opacity: 1; transform: scale(1.05) rotate(5deg); }
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .section-title {
+      margin-bottom: 24px;
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.3rem);
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0 var(--cyan);
+      -webkit-text-stroke: 1px #000;
+    }
+    .featured {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 440px);
+      gap: 0;
+      overflow: hidden;
+      background: var(--panel);
+      border: 5px solid #000;
+      box-shadow: var(--shadow-big);
+      transform: rotate(-.8deg);
+      transition: transform .16s, box-shadow .16s;
+    }
+    .featured:hover {
+      box-shadow: 14px 14px 0 #000;
+      transform: rotate(0deg) translate(-2px, -2px);
+    }
+    .featured-body {
+      padding: 30px;
+    }
+    .post-tag {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 12px;
+      background: var(--magenta);
+      color: #fff;
+      border: 3px solid #000;
+      box-shadow: 3px 3px 0 #000;
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+    .featured h2 {
+      margin-bottom: 12px;
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      letter-spacing: 1px;
+      line-height: 1.02;
+    }
+    .meta {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .excerpt {
+      margin-bottom: 24px;
+      font-size: 1.16rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+    .read-more {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      border: 4px solid #000;
+      box-shadow: 5px 5px 0 #000;
+      font-family: var(--font-heading);
+      font-size: 1.45rem;
+      letter-spacing: 1px;
+      padding: 9px 20px;
+      text-decoration: none;
+      transition: transform .12s, box-shadow .12s, background .12s;
+    }
+    .read-more:hover {
+      background: var(--magenta);
+      box-shadow: 8px 8px 0 #000;
+      transform: translate(-3px, -3px);
+    }
+    .read-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .featured-art {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      min-height: 360px;
+      padding: 24px;
+      background:
+        linear-gradient(135deg, rgba(0,229,255,.85), rgba(57,255,20,.55)),
+        var(--cyan);
+      border-left: 5px solid #000;
+    }
+    .metric {
+      background: #fff;
+      border: 4px solid #000;
+      box-shadow: 5px 5px 0 #000;
+      padding: 14px 16px;
+      font-weight: 700;
+    }
+    .metric strong {
+      display: block;
+      color: var(--red);
+      font-family: var(--font-heading);
+      font-size: 2.1rem;
+      line-height: 1;
+      text-shadow: 2px 2px 0 #000;
+      -webkit-text-stroke: 1px #000;
+    }
+    .note {
+      margin-top: 34px;
+      padding: 20px 24px;
+      background: var(--lime);
+      border: 4px solid #000;
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+      font-weight: 700;
+      transform: rotate(.7deg);
+    }
+    footer {
+      background: var(--panel);
+      border-top: 6px dashed #000;
+      padding: 34px 20px;
+      text-align: center;
+      font-weight: 700;
+    }
+    footer strong {
+      display: block;
+      color: var(--red);
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      text-shadow: 2px 2px 0 #000;
+      -webkit-text-stroke: 1px #000;
+    }
+    @media (max-width: 800px) {
+      nav { justify-content: center; padding: 10px 14px; text-align: center; }
+      .hero { padding: 52px 16px 42px; }
+      .hero::before { width: 260px; height: 260px; }
+      .hero h1 { -webkit-text-stroke: 2px #000; }
+      main { padding: 32px 16px 58px; }
+      .featured { grid-template-columns: 1fr; transform: none; }
+      .featured-art { min-height: 0; border-left: 0; border-top: 5px solid #000; }
+      .featured-body { padding: 22px 18px; }
+      .sfx { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/">nvth</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a class="active" href="/blogs/">Blog</a>
+      <a href="/#connect">Contact</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="sfx left">WRITE-UP!</div>
+    <div class="sfx right">RESEARCH!</div>
+    <div class="hero-content">
+      <h1>The Blog</h1>
+      <div class="hero-sub">Security research, write-ups, and notes from nvth</div>
+    </div>
+  </header>
+
+  <main>
+    <h2 class="section-title">Featured Post</h2>
+    <article class="featured">
+      <div class="featured-body">
+        <span class="post-tag">Vulnerability Research</span>
+        <h2>CVE-2026-59880: Hash-collision algorithmic complexity denial of service in Immutable.Map/Set</h2>
+        <div class="meta">Published: July 2026 - Rendered from Markdown - CVSS v4 8.7 High</div>
+        <p class="excerpt">
+          Hash Collision Denial of Service trong Immutable.js: user-controlled JSON keys,
+          deterministic string hashing, HashCollisionNode scan tuyen tinh, va PoC cho thay
+          collision build/read cham hon baseline hang chuc den hang tram lan.
+        </p>
+        <div class="read-actions">
+          <a class="read-more" href="/blogs/hash-collision-dos/?lang=vi">Doc ban Viet</a>
+          <a class="read-more" href="/blogs/hash-collision-dos/?lang=en">Read English</a>
+        </div>
+      </div>
+      <div class="featured-art" aria-label="Key results">
+        <div class="metric"><strong>89x</strong>Collision Map build slower in the test run</div>
+        <div class="metric"><strong>353x</strong>Collision Map read slower in the test run</div>
+        <div class="metric"><strong>16,384</strong>Generated keys sharing one hash bucket</div>
+      </div>
+    </article>
+
+    <div class="note">
+      Ban Viet goc nam o <code>/data/hash-coliision-immutablejs/blog-hash-collision-dos.md</code>. Ban Anh rieng nam o <code>/data/hash-coliision-immutablejs/blog-hash-collision-dos.en.md</code>.
+    </div>
+  </main>
+
+  <footer>
+    <strong>KEEP HACKING, ETHICALLY.</strong>
+    <p>nvth - Cyber Security Engineer - Since May 2021</p>
+  </footer>
+</body>
+</html>
