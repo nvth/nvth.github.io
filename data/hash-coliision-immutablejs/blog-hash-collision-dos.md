@@ -1,4 +1,4 @@
-﻿# CVE-2026-59880: Hash-collision algorithmic complexity denial of service in Immutable.Map/Set
+# CVE-2026-59880: Hash-collision algorithmic complexity denial of service in Immutable.Map/Set
 
 
 ## Intro ngắn
