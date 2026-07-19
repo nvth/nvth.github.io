@@ -70,7 +70,7 @@ Các cấu trúc phổ biến của Immutable.js gồm:
 - `OrderedMap`
 - `OrderedSet`
 
-Trong bug này mình tập trung chủ yếu vào `Map` và `Set`, vì hai thằng này dùng hash để tổ chức dữ liệu bên trong.
+Trong bug này mình tập trung chủ yếu vào `Map` và `Set`, vì hai thằng này dùng hash để lưu trữ, xử lý dữ liệu bên trong.
 
 ### Map và Set dùng hash như thế nào?
 
@@ -100,10 +100,10 @@ Immutable.js sẽ lấy key `'username'`, tính hash cho nó, rồi dùng hash �
 Để dễ hình dung, giả sử hash được tính bằng một công thức rất đơn giản:
 
 ```text
-hash = tổng mã số của từng ký tự
+hash = tổng ascii của từng ký tự
 ```
 
-Với key `'username'`, ta có thể tưởng tượng:
+Với key `'username'`, ta có:
 
 ```text
 u = 117
@@ -218,7 +218,7 @@ API này cho phép developer tự lấy hash của một giá trị.
 ```text
 Hash được tính như thế nào?
 Hash đó có random seed không?
-Map và Set có dùng cùng hash này để tổ chức dữ liệu không?
+Map và Set có dùng cùng hash này để lưu trữ, xử lý dữ liệu không?
 Nếu nhiều key có cùng hash thì chuyện gì xảy ra?
 ```
 
