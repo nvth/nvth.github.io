@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 Not Found — nvth</title>
-  <meta name="description" content="Oops! This page doesn't exist." />
+  <title>nvth's Blog — Security Guides & Research</title>
+  <meta name="description" content="Practical security guides, Burp Suite tooling and vulnerability research by nvth." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,166 +17,325 @@
       --cyan:    #00E5FF;
       --magenta: #FF007F;
       --lime:    #39FF14;
+      --purple:  #9D00FF;
       --red:     #FF3333;
       --orange:  #FF6B00;
+      --text:    #000000;
+      --muted:   #444444;
       --font-body:    'Comic Neue', cursive, sans-serif;
       --font-heading: 'Bangers', cursive;
       --shadow: 6px 6px 0px #000;
     }
 
-    html, body { height: 100%; }
+    html { scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg);
       background-image: radial-gradient(#000 10%, transparent 11%);
       background-size: 20px 20px;
+      color: var(--text);
       font-family: var(--font-body);
-      color: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       min-height: 100vh;
-      padding: 24px;
-      text-align: center;
-      overflow: hidden;
     }
 
-    /* ── FLOATING GEARS (CSS only) ── */
-    .gear {
-      position: fixed; font-size: 5rem; opacity: 0.12;
-      pointer-events: none; animation: spin-gear 8s linear infinite; z-index: 0;
-    }
-    .gear-1 { top: 5%;  left: 3%;  animation-duration: 10s; font-size: 7rem; }
-    .gear-2 { top: 10%; right: 5%; animation-duration: 7s; animation-direction: reverse; }
-    .gear-3 { bottom: 8%; left: 6%; animation-duration: 12s; animation-direction: reverse; font-size: 4rem; }
-    .gear-4 { bottom: 5%; right: 3%; animation-duration: 9s; font-size: 6rem; }
-    @keyframes spin-gear { 100% { transform: rotate(360deg); } }
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: var(--panel); border-left: 3px solid #000; }
+    ::-webkit-scrollbar-thumb { background: var(--magenta); border: 3px solid #000; }
 
-    /* ── STARBURST ── */
-    .starburst {
-      position: fixed; top: 50%; left: 50%;
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--panel);
+      border-bottom: 4px solid #000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 32px; flex-wrap: wrap; gap: 10px;
+      box-shadow: 0 4px 0px #000;
+    }
+    .nav-brand {
+      font-family: var(--font-heading); font-size: 2rem;
+      color: var(--magenta); -webkit-text-stroke: 1px #000;
+      text-shadow: 3px 3px 0px #000; text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .nav-links a {
+      color: var(--text); text-decoration: none; font-size: 1.1rem; font-weight: bold;
+      padding: 6px 14px; border: 2px solid #000; background: var(--bg);
+      box-shadow: 3px 3px 0px #000; transition: all .1s;
+    }
+    .nav-links a:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #000; background: var(--cyan); }
+    .nav-links a.active { background: var(--magenta); color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center; padding: 70px 20px 50px;
+      position: relative;
+    }
+    .hero-burst {
+      position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 500px; height: 500px; background: var(--cyan);
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
-                          50% 70%, 21% 91%, 32% 57%, 2%  35%, 39% 35%);
-      z-index: 0; opacity: 0.25; animation: spin-gear 30s linear infinite; pointer-events: none;
+      width: 350px; height: 350px;
+      background: var(--cyan);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      z-index: 0; border: 4px solid #000;
+      animation: spin 40s linear infinite;
     }
-
-    /* ── MAIN CARD ── */
-    .card {
-      position: relative; z-index: 2; background: var(--panel);
-      border: 5px solid #000; box-shadow: 10px 10px 0px #000;
-      padding: 48px 52px; max-width: 640px; width: 100%; transform: rotate(-1deg);
+    @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3.5rem, 9vw, 6rem);
+      -webkit-text-stroke: 3px #000;
+      color: #fff;
+      text-shadow: 6px 6px 0px var(--magenta);
+      letter-spacing: 3px;
+      transform: rotate(-2deg);
+      display: inline-block;
     }
-
-    /* Caution tape top */
-    .card::before {
-      content: '⚠ ERROR 404 ⚠ ERROR 404 ⚠ ERROR 404 ⚠ ERROR 404 ⚠';
-      position: absolute; top: -22px; left: -5px; right: -5px;
-      background: repeating-linear-gradient(-45deg, #000 0, #000 14px, var(--bg) 14px, var(--bg) 28px);
-      color: #000; font-family: var(--font-body); font-weight: bold; font-size: 0.75rem; letter-spacing: 2px;
-      text-align: center; overflow: hidden; height: 22px; line-height: 22px; border: 3px solid #000;
-    }
-
-    .emoji-big {
-      font-size: 6rem; display: block; margin-bottom: 10px;
-      animation: wobble 2.5s ease-in-out infinite;
-    }
-    @keyframes wobble {
-      0%, 100% { transform: rotate(-8deg); }
-      50%       { transform: rotate(8deg); }
-    }
-
-    h1 {
-      font-family: var(--font-heading); font-size: clamp(2.8rem, 8vw, 5rem);
-      letter-spacing: 3px; -webkit-text-stroke: 2px #000; color: var(--magenta);
-      text-shadow: 5px 5px 0px #000; margin-bottom: 8px;
-    }
-
-    .subtitle {
+    .hero-sub {
       display: inline-block; background: #000; color: var(--bg);
-      font-size: 1.3rem; font-weight: bold; padding: 6px 18px; margin-bottom: 28px;
-      transform: rotate(1deg); border: 2px solid var(--panel); box-shadow: 3px 3px 0px var(--red);
+      font-size: 1.4rem; font-weight: bold; padding: 8px 20px;
+      margin-top: 16px; transform: rotate(1deg);
+      border: 3px solid var(--panel); box-shadow: 4px 4px 0px var(--red);
+    }
+    .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .hero-tag {
+      background: var(--panel); border: 3px solid #000; box-shadow: 3px 3px 0px #000;
+      padding: 6px 14px; font-weight: bold; font-size: 1rem;
     }
 
-    /* Speech bubble */
-    .speech {
-      background: var(--cyan); border: 4px solid #000; border-radius: 20px;
-      padding: 18px 22px; font-size: 1.2rem; font-weight: bold;
-      position: relative; margin-bottom: 38px; box-shadow: 4px 4px 0px #000;
-    }
-    .speech::after {
-      content: ''; position: absolute; bottom: -26px; left: 50%; transform: translateX(-50%);
-      border-width: 22px 14px 0; border-style: solid; border-color: #000 transparent transparent transparent;
-    }
-    .speech::before {
-      content: ''; position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
-      border-width: 16px 10px 0; border-style: solid; border-color: var(--cyan) transparent transparent transparent;
-      z-index: 1;
+    /* ── MAIN LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 50px 24px; }
+
+    /* ── FEATURED ── */
+    .featured-label {
+      font-family: var(--font-heading); font-size: 2.8rem;
+      letter-spacing: 2px; margin-bottom: 20px;
+      text-shadow: 3px 3px 0px var(--orange);
+      -webkit-text-stroke: 1px #000;
     }
 
-    /* Back button */
-    .btn-home {
+    .post-featured {
+      background: var(--panel); border: 4px solid #000; box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      margin-bottom: 50px; transform: rotate(-1deg);
+      transition: transform .2s, box-shadow .2s;
+      color: #000; text-decoration: none;
+    }
+    .post-featured:hover { transform: rotate(0deg) scale(1.01); box-shadow: 10px 10px 0px #000; }
+
+    .post-featured-thumb {
+      background: var(--cyan);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8rem; padding: 40px;
+      border-right: 4px solid #000;
+    }
+    .post-featured-body { padding: 30px; }
+    .post-tag {
+      display: inline-block; font-family: var(--font-heading); font-size: 1.1rem;
+      letter-spacing: 1px; padding: 4px 12px; border: 3px solid #000;
+      box-shadow: 3px 3px 0px #000; margin-bottom: 14px;
+    }
+    .tag-web  { background: var(--red); color: #fff; }
+    .tag-ctf  { background: var(--lime); }
+    .tag-api  { background: var(--cyan); }
+    .tag-misc { background: var(--purple); color: #fff; }
+    .tag-prod { background: var(--orange); color: #fff; }
+
+    .post-featured-body h2 {
+      font-family: var(--font-heading); font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 10px;
+      line-height: 1.1;
+    }
+    .post-meta { font-size: 1rem; font-weight: bold; color: var(--muted); margin-bottom: 14px; }
+    .post-excerpt { font-size: 1.15rem; line-height: 1.6; margin-bottom: 20px; }
+    .read-more {
       display: inline-block; background: var(--magenta); color: #fff;
-      font-family: var(--font-heading); font-size: 1.6rem; letter-spacing: 2px;
-      padding: 12px 28px; border: 4px solid #000; box-shadow: var(--shadow);
-      text-decoration: none; transition: all .1s; margin-top: 10px;
+      font-family: var(--font-heading); font-size: 1.4rem; letter-spacing: 1px;
+      padding: 8px 20px; border: 3px solid #000; box-shadow: 4px 4px 0px #000;
+      text-decoration: none; transition: all .1s;
     }
-    .btn-home:hover {
-      transform: translate(-3px, -3px); box-shadow: 9px 9px 0px #000; background: var(--red);
-    }
+    .read-more:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
 
-    /* SFX burst */
-    .sfx {
-      position: fixed; z-index: 3; pointer-events: none;
-      font-family: var(--font-heading); font-size: 2.5rem; letter-spacing: 2px;
-      -webkit-text-stroke: 1px #000; color: var(--orange); text-shadow: 3px 3px 0px #000;
-      animation: pop-sfx 4s ease-in-out infinite;
+    /* ── GRID ── */
+    .section-title {
+      font-family: var(--font-heading); font-size: 2.5rem;
+      letter-spacing: 2px; margin-bottom: 24px;
+      text-shadow: 3px 3px 0px var(--cyan);
+      -webkit-text-stroke: 1px #000;
     }
-    .sfx-1 { top: 12%; left: 8%;  animation-delay: 0s;   color: var(--red); }
-    .sfx-2 { top: 15%; right: 7%; animation-delay: 1.5s; color: var(--magenta); }
-    .sfx-3 { bottom: 15%; left: 10%; animation-delay: 0.8s; font-size: 2rem; }
-    .sfx-4 { bottom: 12%; right: 8%; animation-delay: 2.2s; color: var(--orange); }
-    @keyframes pop-sfx {
-      0%, 100% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
-      30%, 70%  { opacity: 1; transform: scale(1) rotate(5deg); }
+    .posts-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px; margin-bottom: 60px;
     }
+    .post-card {
+      background: var(--panel); border: 4px solid #000; box-shadow: var(--shadow);
+      display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .post-card:nth-child(odd)  { transform: rotate(1deg); }
+    .post-card:nth-child(even) { transform: rotate(-1deg); }
+    .post-card:hover { transform: rotate(0deg) scale(1.03); box-shadow: 10px 10px 0px #000; }
 
-    @media (max-width: 520px) {
-      .card { padding: 36px 24px; }
-      h1 { font-size: 2.5rem; }
+    .post-thumb {
+      font-size: 4rem; text-align: center; padding: 30px;
+      border-bottom: 4px solid #000;
+    }
+    .post-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .post-body h3 { font-family: var(--font-heading); font-size: 1.6rem; letter-spacing: 1px; margin: 10px 0 8px; line-height: 1.2; }
+    .post-body p { font-size: 1.05rem; line-height: 1.5; flex: 1; margin-bottom: 16px; }
+    .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+    .post-date { font-size: .9rem; font-weight: bold; color: var(--muted); }
+    .card-read-more {
+      background: var(--bg); color: #000; font-family: var(--font-heading); font-size: 1.2rem;
+      padding: 5px 14px; border: 3px solid #000; box-shadow: 3px 3px 0px #000;
+      text-decoration: none; transition: all .1s; letter-spacing: 1px;
+    }
+    .card-read-more:hover { background: var(--lime); transform: translate(-2px,-2px); box-shadow: 5px 5px 0px #000; }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--cyan); border: 4px solid #000; box-shadow: var(--shadow);
+      padding: 36px; text-align: center; margin-bottom: 60px;
+      transform: rotate(1deg);
+    }
+    .newsletter h2 { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 10px; }
+    .newsletter p { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; }
+    .nl-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .nl-form input {
+      padding: 12px 18px; font-size: 1.1rem; font-family: var(--font-body);
+      border: 3px solid #000; box-shadow: 3px 3px 0px #000; outline: none;
+      min-width: 280px; font-weight: bold;
+    }
+    .nl-form button {
+      background: var(--magenta); color: #fff;
+      font-family: var(--font-heading); font-size: 1.4rem; letter-spacing: 1px;
+      padding: 12px 24px; border: 3px solid #000; box-shadow: 4px 4px 0px #000;
+      cursor: pointer; transition: all .1s;
+    }
+    .nl-form button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--panel); border-top: 6px dashed #000;
+      text-align: center; padding: 36px 20px;
+      font-size: 1.1rem; font-weight: bold;
+    }
+    .footer-quote { font-family: var(--font-heading); font-size: 2rem; color: var(--red); margin-bottom: 8px; text-shadow: 2px 2px 0px #000; -webkit-text-stroke: 1px #000; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 40px 16px 30px; }
+      .hero h1 { font-size: 3rem; -webkit-text-stroke: 2px #000; }
+      .hero-burst { width: 250px; height: 250px; }
+      .hero-sub { font-size: 1.1rem; padding: 6px 14px; }
+      .hero-tag { font-size: 0.9rem; padding: 4px 10px; }
+      nav { padding: 10px; flex-direction: column; text-align: center; }
+      .nav-links { justify-content: center; }
+      .container { padding: 30px 16px; }
+      .featured-label { font-size: 2rem; }
+      .post-featured { grid-template-columns: 1fr; }
+      .post-featured-thumb { border-right: none; border-bottom: 4px solid #000; padding: 20px; font-size: 5rem; }
+      .post-featured-body h2 { font-size: 1.8rem; }
+      .post-excerpt { font-size: 1rem; }
+      .read-more { font-size: 1.2rem; padding: 6px 16px; }
+      .section-title { font-size: 2rem; }
+      .posts-grid { grid-template-columns: 1fr; gap: 20px; }
+      .newsletter { padding: 20px 16px; }
+      .newsletter h2 { font-size: 2rem; }
+      .nl-form input { min-width: 100%; width: 100%; }
+      .nl-form button { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Background decorations -->
-  <div class="starburst"></div>
-  <div class="gear gear-1">⚙️</div>
-  <div class="gear gear-2">⚙️</div>
-  <div class="gear gear-3">⚙️</div>
-  <div class="gear gear-4">⚙️</div>
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="/">🦈 nvth</a>
+  <div class="nav-links">
+    <a href="/">🏠 Home & About</a>
+    <a href="/blogs/" class="active">📝 Blog</a>
+    <a href="/research/">🔬 Research</a>
+    <a href="/#connect">🌐 Contact</a>
+  </div>
+</nav>
 
-  <!-- Comic SFX -->
-  <div class="sfx sfx-1">WHOOPS!</div>
-  <div class="sfx sfx-2">LOST!</div>
-  <div class="sfx sfx-3">404!</div>
-  <div class="sfx sfx-4">NULL!</div>
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-burst"></div>
+  <div class="hero-content">
+    <h1>THE BLOG!</h1>
+    <div class="hero-sub">Security Guides · Tooling · Research</div>
+    <div class="hero-tags">
+      <span class="hero-tag">💣 Web Exploitation</span>
+      <span class="hero-tag">🛠️ Security Tooling</span>
+      <span class="hero-tag">🔬 Vulnerability Research</span>
+      <span class="hero-tag">🛡️ Product Security</span>
+    </div>
+  </div>
+</div>
 
-  <!-- Main card -->
-  <div class="card">
-    <span class="emoji-big">🕵️</span>
-    <h1>404 NOT FOUND!</h1>
-    <div class="subtitle">Looks like this page doesn't exist!</div>
+<div class="container">
 
-    <div class="speech">
-      🦈 nvth has searched everywhere, but this link is a dead end.<br/>
-      <strong>Let's get you back to safety! 🏠</strong>
+  <!-- ── FEATURED POST ── -->
+  <div class="featured-label">⭐ Featured Guide!</div>
+  <a class="post-featured" href="/blogs/burpmcp-ultra-codex-windows/">
+    <div class="post-featured-thumb">🛠️</div>
+    <div class="post-featured-body">
+      <span class="post-tag tag-misc">BURP SUITE + MCP</span>
+      <h2>Install BurpMCP-Ultra with Codex on Windows</h2>
+      <div class="post-meta">📅 September 9, 2026 &nbsp;·&nbsp; 🇬🇧 EN &nbsp;·&nbsp; 🇻🇳 VI</div>
+      <p class="post-excerpt">
+        A practical guide to installing BurpMCP-Ultra, obtaining its Bearer token, and connecting Burp Suite
+        to Codex over SSE on Windows—without CC-switch, Caddy, or mcp-proxy.jar.
+      </p>
+      <span class="read-more">READ THE GUIDE →</span>
+    </div>
+  </a>
+
+  <!-- ── LATEST POSTS ── -->
+  <div class="section-title">💥 Latest Posts!</div>
+  <div class="posts-grid">
+
+    <div class="post-card">
+      <div class="post-thumb" style="background: #fff0f0;">💥</div>
+      <div class="post-body">
+        <span class="post-tag tag-web">VULNERABILITY RESEARCH</span>
+        <h3>CVE-2026-59880: Hash-collision DoS in Immutable.Map/Set</h3>
+        <p>Root-cause analysis, proof of concept, impact and mitigation for an algorithmic complexity denial-of-service vulnerability in Immutable.js.</p>
+        <div class="post-footer">
+          <span class="post-date">July 9, 2026</span>
+          <a href="/research/cve-2026-59880/" class="card-read-more">READ →</a>
+        </div>
+      </div>
     </div>
 
-    <a href="/" class="btn-home">← GO HOME</a>
+    <div class="post-card">
+      <div class="post-thumb" style="background: #f0fff0;">🔭</div>
+      <div class="post-body">
+        <span class="post-tag tag-api">COMING NEXT</span>
+        <h3>More security notes are being prepared</h3>
+        <p>New practical guides and research will appear here when they are ready to publish.</p>
+        <div class="post-footer">
+          <span class="post-date">Stay tuned</span>
+          <a href="https://github.com/nvth" class="card-read-more">GITHUB →</a>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-quote">"KEEP HACKING (ETHICALLY)!"</div>
+  <p>nvth · Cyber Security Engineer · Since May 2021</p>
+  <p style="margin-top: 8px; color: var(--muted);">
+    <a href="/" style="color: inherit;">Home & About</a> &nbsp;·&nbsp;
+    <a href="/blogs/" style="color: inherit;">Blog</a> &nbsp;·&nbsp;
+    <a href="/research/" style="color: inherit;">Research</a> &nbsp;·&nbsp;
+    <a href="/#connect" style="color: inherit;">Contact</a>
+  </p>
+</footer>
 
 </body>
 </html>
