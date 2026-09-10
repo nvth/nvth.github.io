@@ -182,7 +182,6 @@
     /* Add random subtle tilts to panels */
     #about { transform: rotate(1deg); }
     #certs { transform: rotate(-1deg); }
-    #expertise { transform: rotate(0.5deg); }
     #tools { transform: rotate(-0.5deg); }
     #stats { transform: rotate(1deg); }
     #focus { transform: rotate(-1deg); background: transparent; border: none; box-shadow: none; padding: 0;}
@@ -356,176 +355,17 @@
 </head>
 <body>
 
-<!-- ═══ HEADER ═══ -->
-<header>
-  <div class="starburst"></div>
-  <div class="avatar-comic">🦈</div>
-  <h1>nvth</h1>
-  <div class="subtitle">Cyber Security Engineer</div>
-  
-  <div class="badge-row">
-    <span class="badge badge-green">⚡ Penetration Tester</span>
-    <span class="badge badge-blue">🏗️ Product Security</span>
-    <span class="badge" style="background:var(--magenta); color:#fff">📅 Since May 2021</span>
-  </div>
-</header>
-
-<!-- ═══ NAV ═══ -->
-<nav>
-  <a href="/">🏠 Home</a>
-  <a href="#about">About</a>
-  <a href="#certs">Certs</a>
-  <a href="#expertise">Skills</a>
-  <a href="#stats">Stats</a>
-  <a href="#timeline">Timeline</a>
-  <a href="#focus">Focus</a>
-  <a href="#connect">Connect</a>
-  <a href="/blogs" style="background: var(--cyan); color: #000;">📝 Blog</a>
-</nav>
-
 <main>
 
   <!-- ABOUT -->
   <section id="about" class="comic-panel">
     <h2 class="section-title">Who am I?</h2>
     <div class="comic-text">
-      <p>I'm <span class="highlight">nvth</span>, an ethical hacker with an offensive mindset and a defensive purpose!</p>
-      <br>
-      <p><strong>Roles:</strong> Penetration Tester &amp; Product Security</p>
-      <p><strong>Education:</strong> FPT University — Information Assurance (May 2020)</p>
-      <p><strong>Specialties:</strong> Web App Pentesting, Vuln Research, Secure Code Review.</p>
+      <p>I'm <span class="highlight">nvth</span>, an ordinary person with a few simple tricks.</p>
     </div>
     <blockquote>
-      POW! Started hacking ethically in May 2021 and never looked back! Breaking things the right way, to build them stronger!
+      Quietly learning and making things better, one step at a time.
     </blockquote>
-  </section>
-
-  <!-- FOCUS (Speech Bubble) -->
-  <section id="focus">
-    <div class="speech-bubble">
-      <h2 class="sb-title">What am I up to right now?</h2>
-      <ul class="sb-list">
-        <li>Web Application Penetration Testing</li>
-        <li>API Security Assessment</li>
-        <li>Secure SDLC Integration (Product Security)</li>
-        <li>Vulnerability Research &amp; Exploit Development</li>
-        <li>Always learning. Always breaking. Always improving.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- CERTS -->
-  <section id="certs" class="comic-panel">
-    <h2 class="section-title">Badges of Honor!</h2>
-    <div class="cert-grid">
-      <div class="cert-card">
-        <div class="cert-icon">🔥</div>
-        <div>
-          <div class="cert-name" style="color: var(--red);">OSWE</div>
-          <div class="cert-full">Offensive Security Web Expert</div>
-          <div class="cert-meta">Jun 2024</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">🌟</div>
-        <div>
-          <div class="cert-name" style="color: var(--cyan);">CEH</div>
-          <div class="cert-full">Certified Ethical Hacker</div>
-          <div class="cert-meta">Mar 2023</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERTISE & TOOLS -->
-  <section id="expertise" class="comic-panel">
-    <h2 class="section-title">Arsenal &amp; Skills</h2>
-    
-    <div class="tag-group">
-      <div class="tag-label"># OFFENSIVE ARSENAL</div>
-      <div class="tags">
-        <span class="tag tag-off">PENTESTING!</span>
-        <span class="tag tag-off">RED TEAM!</span>
-        <span class="tag tag-off">EXPLOIT DEV!</span>
-        <span class="tag tag-off">VULN RESEARCH!</span>
-      </div>
-    </div>
-    
-    <div class="tag-group">
-      <div class="tag-label"># DEFENSIVE SHIELD</div>
-      <div class="tags">
-        <span class="tag tag-def">PROD SEC!</span>
-        <span class="tag tag-def">CODE REVIEW!</span>
-        <span class="tag tag-def">OWASP TOP 10!</span>
-        <span class="tag tag-def">BUG BOUNTY!</span>
-      </div>
-    </div>
-    
-    <div class="tag-group">
-      <div class="tag-label"># WEAPONS OF CHOICE</div>
-      <div class="tags">
-        <span class="tag tag-tool">Burp Suite</span>
-        <span class="tag tag-tool">Metasploit</span>
-        <span class="tag tag-tool">Nuclei</span>
-        <span class="tag tag-lang">Python</span>
-        <span class="tag tag-lang">JavaScript</span>
-        <span class="tag tag-plat">Docker</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <section id="stats" class="comic-panel">
-    <h2 class="section-title">The Numbers!</h2>
-    <div class="stat-grid">
-      <div class="stat-card">
-        <div class="stat-num" id="years-exp">0+</div>
-        <div class="stat-label">Years Hacking</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">2</div>
-        <div class="stat-label">Epic Certs</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">2</div>
-        <div class="stat-label">Core Domains</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">Things to Break!</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TIMELINE -->
-  <section id="timeline" class="comic-panel">
-    <h2 class="section-title">Origin Story</h2>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-dot" style="background: var(--red);"></div>
-        <div class="tl-date">Jun 2024</div>
-        <div class="tl-title">OSWE Mastered!</div>
-        <div class="tl-desc">Conquered Advanced web application exploitation!</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot" style="background: var(--lime);"></div>
-        <div class="tl-date">Mar 2023</div>
-        <div class="tl-title">CEH Certified!</div>
-        <div class="tl-desc">Mastered the ethical hacking methodology!</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot" style="background: var(--cyan);"></div>
-        <div class="tl-date">May 2021</div>
-        <div class="tl-title">The Journey Begins!</div>
-        <div class="tl-desc">Started the professional path in Penetration Testing.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot" style="background: var(--purple);"></div>
-        <div class="tl-date">May 2020</div>
-        <div class="tl-title">Graduation Day!</div>
-        <div class="tl-desc">Earned a degree in Information Assurance from FPT University.</div>
-      </div>
-    </div>
   </section>
 
   <!-- CONNECT -->
@@ -545,17 +385,5 @@
 
 </main>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <p class="quote">"Keep It Simple, Stupid!"</p>
-  <p>nvth · The Comic Sec-Hero · Since May 2021</p>
-</footer>
-
-<script>
-  // Dynamic Years of Experience
-  const startYear = 2021;
-  const currentYear = new Date().getFullYear();
-  document.getElementById('years-exp').textContent = (currentYear - startYear) + '+';
-</script>
 </body>
 </html>
