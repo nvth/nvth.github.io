@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitOps lab with Argo CD, Minikube and WSL2 | nvth</title>
+  <meta name="description" content="Build a local GitOps lab on Windows with WSL2, Docker Desktop, Minikube, Argo CD, RBAC, drift detection and self-healing." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "GitOps lab with Argo CD, Minikube and WSL2",
+    "description": "A practical Windows lab for understanding GitOps with WSL2, Docker Desktop, Minikube, Argo CD, RBAC, drift, and self-healing.",
+    "datePublished": "2026-09-16",
+    "inLanguage": ["vi", "en"],
+    "author": {
+      "@type": "Person",
+      "@id": "https://nvth.github.io/#about",
+      "name": "Nguyễn Vương Tuấn Hiệp",
+      "alternateName": ["NVTH", "nvth"],
+      "url": "https://nvth.github.io/"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blogs/post.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="nav-brand" href="/">🦈 nvth</a>
+    <div class="nav-links">
+      <a href="/">🏠 Home</a>
+      <a href="/blogs/" class="active">📝 Blog</a>
+      <a href="/research/">🔬 Research</a>
+      <a href="/#connect">🌐 Contact</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="sfx">GITOPS!</div>
+    <div class="sfx">SYNC!</div>
+    <div class="sfx">DRIFT!</div>
+    <div class="hero-inner">
+      <div>
+        <span class="label">DevOps · Kubernetes Lab</span>
+        <div class="language-switch" aria-label="Language switcher">
+          <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn" type="button" data-lang="vi" aria-pressed="false">VI</button>
+        </div>
+        <h1 id="post-title">GitOps lab with Argo CD, Minikube and WSL2</h1>
+        <p class="dek" id="post-dek">See GitOps in action on Windows: Git defines the desired state, Argo CD syncs it, and Kubernetes holds the live state.</p>
+        <div class="hero-meta" id="hero-meta">
+          <span>Published: September 16, 2026</span>
+          <span>WSL2</span>
+          <span>Argo CD</span>
+          <span id="post-topic">Minikube + Docker Desktop</span>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="GitOps flow">
+        <strong>DESIRED → LIVE_</strong>
+        <code>Git repository
+↓ observe
+Argo CD
+↓ sync
+Kubernetes
+↓ detect
+Drift / heal</code>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="toc">
+      <h2>Jump cuts</h2>
+      <nav id="toc-links" aria-label="Table of contents"></nav>
+      <a class="action-link" id="raw-md-link" href="/bdata/gitops-argocd-windows/index.en.md">Open raw EN MD</a>
+    </aside>
+    <article id="article" class="article" aria-live="polite">
+      <div class="loading">Loading the guide...</div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <strong>SHIP IT. SYNC IT. UNDERSTAND IT.</strong>
+    <p>nvth · Cyber Security Engineer · GitOps lab notes</p>
+    <p><a href="/blogs/">Back to Blog</a> · <a href="/research/">Research</a> · <a href="/#connect">Contact</a></p>
+  </footer>
+
+  <script>
+    window.BLOG_POST_CONFIG = {
+      defaultLang: "en",
+      content: {
+        vi: {
+          title: "Lab GitOps với Argo CD, Minikube và WSL2",
+          browserTitle: "Lab GitOps với Argo CD, Minikube và WSL2 | nvth",
+          description: "Xây dựng lab GitOps local trên Windows với WSL2, Docker Desktop, Minikube, Argo CD, RBAC, drift detection và self-healing.",
+          dek: "Quan sát GitOps hoạt động trên Windows: Git định nghĩa desired state, Argo CD đồng bộ và Kubernetes giữ live state.",
+          topic: "Minikube + Docker Desktop",
+          meta: ["Đăng ngày: 16 tháng 9, 2026", "WSL2", "Argo CD", "Kubernetes"],
+          rawLabel: "Open raw MD",
+          loading: "Đang nạp Markdown từ",
+          mdUrl: "/bdata/gitops-argocd-windows/index.md"
+        },
+        en: {
+          title: "GitOps lab with Argo CD, Minikube and WSL2",
+          browserTitle: "GitOps lab with Argo CD, Minikube and WSL2 | nvth",
+          description: "Build a local GitOps lab on Windows with WSL2, Docker Desktop, Minikube, Argo CD, RBAC, drift detection and self-healing.",
+          dek: "See GitOps in action on Windows: Git defines the desired state, Argo CD syncs it, and Kubernetes holds the live state.",
+          topic: "Minikube + Docker Desktop",
+          meta: ["Published: September 16, 2026", "WSL2", "Argo CD", "Kubernetes"],
+          rawLabel: "Open raw EN MD",
+          loading: "Loading Markdown from",
+          mdUrl: "/bdata/gitops-argocd-windows/index.en.md"
+        }
+      }
+    };
+  </script>
+  <script src="/blogs/post.js"></script>
+</body>
+</html>

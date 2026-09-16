@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connect Burp Suite MCP with Codex CLI on Windows | nvth</title>
+  <meta name="description" content="Connect PortSwigger MCP Server in Burp Suite to Codex CLI on Windows with Java mcp-proxy.jar and a Caddy SSE bridge." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Connect Burp Suite MCP with Codex CLI on Windows",
+    "description": "A Windows setup guide for PortSwigger MCP Server, mcp-proxy.jar, Caddy, and Codex CLI.",
+    "datePublished": "2026-09-16",
+    "inLanguage": ["vi", "en"],
+    "author": {
+      "@type": "Person",
+      "@id": "https://nvth.github.io/#about",
+      "name": "Nguyễn Vương Tuấn Hiệp",
+      "alternateName": ["NVTH", "nvth"],
+      "url": "https://nvth.github.io/"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blogs/post.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="nav-brand" href="/">🦈 nvth</a>
+    <div class="nav-links">
+      <a href="/">🏠 Home</a>
+      <a href="/blogs/" class="active">📝 Blog</a>
+      <a href="/research/">🔬 Research</a>
+      <a href="/#connect">🌐 Contact</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="sfx">BURP!</div>
+    <div class="sfx">MCP!</div>
+    <div class="sfx">LINK!</div>
+    <div class="hero-inner">
+      <div>
+        <span class="label">Burp Suite · Codex CLI</span>
+        <div class="language-switch" aria-label="Language switcher">
+          <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn" type="button" data-lang="vi" aria-pressed="false">VI</button>
+        </div>
+        <h1 id="post-title">Connect Burp Suite MCP with Codex CLI on Windows</h1>
+        <p class="dek" id="post-dek">A Windows bridge from Burp's HTTP history to Codex CLI through PortSwigger MCP Server, Java, and Caddy.</p>
+        <div class="hero-meta" id="hero-meta">
+          <span>Published: September 16, 2026</span>
+          <span>Burp Suite Professional</span>
+          <span>MCP</span>
+          <span id="post-topic">Java proxy + Caddy SSE</span>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="MCP connection flow">
+        <strong>CONNECTION FLOW_</strong>
+        <code>Browser
+↓ proxy
+Burp Suite
+↓ MCP :9876
+Caddy :19876
+↓ SSE
+Codex CLI</code>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="toc">
+      <h2>Jump cuts</h2>
+      <nav id="toc-links" aria-label="Table of contents"></nav>
+      <a class="action-link" id="raw-md-link" href="/bdata/mcp-server-codex-windows/index.en.md">Open raw EN MD</a>
+    </aside>
+    <article id="article" class="article" aria-live="polite">
+      <div class="loading">Loading the guide...</div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <strong>KEEP HACKING, ETHICALLY.</strong>
+    <p>nvth · Cyber Security Engineer · Burp Suite + Codex</p>
+    <p><a href="/blogs/">Back to Blog</a> · <a href="/research/">Research</a> · <a href="/#connect">Contact</a></p>
+  </footer>
+
+  <script>
+    window.BLOG_POST_CONFIG = {
+      defaultLang: "en",
+      content: {
+        vi: {
+          title: "Kết nối Burp Suite MCP với Codex CLI trên Windows",
+          browserTitle: "Kết nối Burp Suite MCP với Codex CLI trên Windows | nvth",
+          description: "Hướng dẫn kết nối PortSwigger MCP Server trong Burp Suite với Codex CLI trên Windows bằng Java mcp-proxy.jar và cầu nối SSE Caddy.",
+          dek: "Cầu nối Windows đưa HTTP history của Burp tới Codex CLI qua PortSwigger MCP Server, Java và Caddy.",
+          topic: "Java proxy + Caddy SSE",
+          meta: ["Đăng ngày: 16 tháng 9, 2026", "Burp Suite Professional", "MCP", "Windows"],
+          rawLabel: "Open raw MD",
+          loading: "Đang nạp Markdown từ",
+          mdUrl: "/bdata/mcp-server-codex-windows/index.md"
+        },
+        en: {
+          title: "Connect Burp Suite MCP with Codex CLI on Windows",
+          browserTitle: "Connect Burp Suite MCP with Codex CLI on Windows | nvth",
+          description: "Connect PortSwigger MCP Server in Burp Suite to Codex CLI on Windows with Java mcp-proxy.jar and a Caddy SSE bridge.",
+          dek: "A Windows bridge from Burp's HTTP history to Codex CLI through PortSwigger MCP Server, Java, and Caddy.",
+          topic: "Java proxy + Caddy SSE",
+          meta: ["Published: September 16, 2026", "Burp Suite Professional", "MCP", "Windows"],
+          rawLabel: "Open raw EN MD",
+          loading: "Loading Markdown from",
+          mdUrl: "/bdata/mcp-server-codex-windows/index.en.md"
+        }
+      }
+    };
+  </script>
+  <script src="/blogs/post.js"></script>
+</body>
+</html>
