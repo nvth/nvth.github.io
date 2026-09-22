@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Truth About CORS | nvth</title>
+  <meta name="description" content="A practical, bilingual guide to CORS origin reflection, credentialed reads, browser proof of concept, and the difference between CORS and CSRF." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Truth About CORS",
+    "description": "A practical guide to CORS origin reflection, credentialed reads, and the difference between CORS and CSRF.",
+    "datePublished": "2026-09-22",
+    "inLanguage": ["en", "vi"],
+    "author": {
+      "@type": "Person",
+      "@id": "https://nvth.github.io/#about",
+      "name": "Nguyễn Vương Tuấn Hiệp",
+      "alternateName": ["NVTH", "nvth"],
+      "url": "https://nvth.github.io/"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blogs/post.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="nav-brand" href="/">🦈 nvth</a>
+    <div class="nav-links">
+      <a href="/">🏠 Home</a>
+      <a href="/blogs/" class="active">📝 Blog</a>
+      <a href="/research/">🔬 Research</a>
+      <a href="/#connect">🌐 Contact</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="sfx">CORS!</div>
+    <div class="sfx">ORIGIN!</div>
+    <div class="sfx">READ!</div>
+    <div class="hero-inner">
+      <div>
+        <span class="label">Web Security · CORS</span>
+        <div class="language-switch" aria-label="Language switcher">
+          <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn" type="button" data-lang="vi" aria-pressed="false">VI</button>
+        </div>
+        <h1 id="post-title">The Truth About CORS</h1>
+        <p class="dek" id="post-dek">What origin reflection really exposes, why CORS is not CSRF, and how to fix a credentialed CORS policy safely.</p>
+        <div class="hero-meta" id="hero-meta">
+          <span>Published: September 22, 2026</span>
+          <span>Web Security</span>
+          <span>CORS</span>
+          <span id="post-topic">Origin reflection</span>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="CORS decision flow">
+        <strong>THE DECISION_</strong>
+        <code>Origin: attacker.example
+        ↓
+Exact allowlist?
+        ↓
+No → no ACAO
+Yes → exact ACAO
+ACAC only if needed</code>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="toc">
+      <h2>Jump cuts</h2>
+      <nav id="toc-links" aria-label="Table of contents"></nav>
+      <a class="action-link" id="raw-md-link" href="/bdata/cors-truth/index.en.md">Open raw EN MD</a>
+    </aside>
+    <article id="article" class="article" aria-live="polite">
+      <div class="loading">Loading the guide...</div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <strong>KEEP HACKING, ETHICALLY.</strong>
+    <p>nvth · Cyber Security Engineer · Web Security</p>
+    <p><a href="/blogs/">Back to Blog</a> · <a href="/research/">Research</a> · <a href="/#connect">Contact</a></p>
+  </footer>
+
+  <script>
+    window.BLOG_POST_CONFIG = {
+      defaultLang: "en",
+      content: {
+        vi: {
+          title: "Sự thật về CORS",
+          browserTitle: "Sự thật về CORS | nvth",
+          description: "Hướng dẫn thực tế về CORS origin reflection, credentialed response, PoC trong trình duyệt và sự khác nhau giữa CORS với CSRF.",
+          dek: "Origin reflection thực sự làm lộ gì, vì sao CORS không phải CSRF và cách sửa credentialed CORS policy an toàn.",
+          topic: "Origin reflection",
+          meta: ["Đăng ngày: 22 tháng 9, 2026", "Web Security", "CORS", "Song ngữ"],
+          rawLabel: "Mở Markdown gốc",
+          loading: "Đang nạp Markdown từ",
+          mdUrl: "/bdata/cors-truth/index.md"
+        },
+        en: {
+          title: "The Truth About CORS",
+          browserTitle: "The Truth About CORS | nvth",
+          description: "A practical guide to CORS origin reflection, credentialed reads, browser proof of concept, and the difference between CORS and CSRF.",
+          dek: "What origin reflection really exposes, why CORS is not CSRF, and how to fix a credentialed CORS policy safely.",
+          topic: "Origin reflection",
+          meta: ["Published: September 22, 2026", "Web Security", "CORS", "Bilingual"],
+          rawLabel: "Open raw EN MD",
+          loading: "Loading Markdown from",
+          mdUrl: "/bdata/cors-truth/index.en.md"
+        }
+      }
+    };
+  </script>
+  <script src="/blogs/post.js"></script>
+</body>
+</html>
