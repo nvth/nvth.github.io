@@ -1,0 +1,7 @@
+/* Post listing visibility. Remove a selector to show that post again.
+   This hides listing entries only; article URLs and source files stay public.
+   Mark every card, featured label and badge with the same data-post-id.
+   Add more selectors separated by commas to hide additional posts. */
+[data-post-id="cve-2026-59880"] {
+  display: none !important;
+}
