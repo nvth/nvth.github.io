@@ -6,7 +6,7 @@
   <title>Security Advisories — nvth</title>
   <meta name="description" content="Public GitHub Security Advisories reported or coordinated by nvth." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -38,6 +38,7 @@
       --text: #000000;
       --muted: #444444;
       --font-body: 'Comic Neue', cursive, sans-serif;
+      --font-vietnamese: 'Noto Sans', Arial, sans-serif;
       --font-heading: 'Bangers', cursive;
       --shadow: 6px 6px 0 #000;
     }
@@ -203,7 +204,7 @@
       -webkit-text-stroke: 1px #000;
     }
 
-    .intro p { max-width: 880px; font-size: 1.18rem; font-weight: bold; line-height: 1.6; }
+    .intro p { max-width: 880px; font-family: var(--font-vietnamese); font-size: 1.18rem; font-weight: 700; line-height: 1.6; }
 
     .intro-note {
       display: inline-block;
@@ -422,8 +423,7 @@
   <main class="container">
     <section class="intro" aria-labelledby="page-intro">
       <h2 class="section-title" id="page-intro">What belongs here?</h2>
-      <p>This page collects public security bugs, vulnerabilities, and advisories reported or coordinated by <strong>nvth</strong>—whether they are published on GitHub, NVD, a vendor portal, or another recognized disclosure source. Each record links to the most authoritative public source, with affected and patched versions where available.</p>
-      <span class="intro-note">Newest report first · oldest report last.</span>
+      <p>This page collects public security advisories reported or coordinated by Nguyễn Vương Tuấn Hiệp - nvth</p>
     </section>
 
     <section class="advisory-grid" aria-label="Security advisories">
