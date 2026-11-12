@@ -5,3 +5,7 @@
 [data-post-id="cve-2026-59880"] {
   display: none !important;
 }
+
+[data-post-id="prestashop-svg-ato"] {
+  display: none !important;
+}
